@@ -13,7 +13,7 @@
     </td>
     <td>
       <div>
-        <img src="https://joaopauloaramuni.github.io/image/logo_ES_vertical.png" alt="Logo do Projeto" width="120px"/>
+        <img src="https://github.com/henriquegdc/Sistema-Aluguel-de-Carros/blob/main/IMG/logo_ES_vertical.png" alt="Logo do Projeto" width="120px"/>
       </div>
     </td>
   </tr> 
@@ -89,4 +89,36 @@ O sistema é dividido em dois subsistemas fundamentais:
 * Java JDK 17+ instalado.
 * Maven para gestão de dependências.
 
-### Como Executar
+### Processo de Desenvolvimento
+
+O projeto é dividido em três entregas (Sprints) principais:
+
+* **Lab02S01:** Modelagem UML (Casos de Uso, Histórias do Usuário, Classes e Pacotes).
+* **Lab02S02:** Diagrama de Componentes e implementação do CRUD de cliente.
+* **Lab02S03:** Diagrama de Implantação e protótipo funcional para pedidos de aluguel.
+
+
+---
+
+## 👥 Autores
+Este projeto foi desenvolvido individualmente como parte das atividades práticas do curso de Engenharia de Software.
+
+| 👤 Nome | 🖼️ Foto | :octocat: GitHub | 💼 LinkedIn | 📤 Gmail |
+|---------|----------|-----------------|-------------|-----------|
+| **João Pedro Moura** | <div align="center"><img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" width="70px" height="70px"></div> | <div align="center"><a href="https://github.com/joaopedromoura"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="https://www.linkedin.com/in/joaopedromoura"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="mailto:joaopedromoura@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
+| **Miguel** | <div align="center"><img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" width="70px" height="70px"></div> | <div align="center"><a href="https://github.com/joaopedromoura"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="https://www.linkedin.com/in/joaopedromoura"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="mailto:joaopedromoura@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
+| **Henrique** | <div align="center"><img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" width="70px" height="70px"></div> | <div align="center"><a href="https://github.com/joaopedromoura"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="https://www.linkedin.com/in/joaopedromoura"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="mailto:joaopedromoura@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
+
+
+---
+
+## 🙏 Agradecimentos
+Gostaria de expressar gratidão às instituições e profissionais que viabilizaram a execução deste projeto acadêmico:
+
+* [**Engenharia de Software PUC Minas**](https://www.instagram.com/engsoftwarepucminas/) - Pelo suporte institucional e pela sólida estrutura acadêmica fornecida durante o 4º período.
+* [**Prof.João Paulo Carneiro Aramuni**](https://github.com/joaopauloaramuni) - Pelas orientações técnicas, fornecimento do material base e condução da disciplina de Laboratório de Desenvolvimento de Software.
+
+
+---
+
+
