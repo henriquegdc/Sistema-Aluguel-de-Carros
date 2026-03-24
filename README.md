@@ -13,7 +13,7 @@
     </td>
     <td>
       <div>
-        <img src="https://github.com/henriquegdc/Sistema-Aluguel-de-Carros/blob/main/IMG/logo_ES_vertical.png" alt="Logo do Projeto" width="120px"/>
+        <img src="https://github.com/henriquegdc/Sistema-Aluguel-de-Carros/blob/main/IMG/logo_ES_vertical.png" alt="Logo do Projeto" width="350px"/>
       </div>
     </td>
   </tr> 
