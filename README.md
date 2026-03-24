@@ -8,7 +8,7 @@
   <tr>
     <td width="800px">
       <div align="justify">
-        Este projeto foi desenvolvido para a disciplina de <b>Laboratório de Desenvolvimento de Software</b> do curso de Engenharia de Software na <b>PUC Minas</b>. O sistema foca na automação do fluxo de locação, permitindo que usuários individuais (clientes) e agentes (empresas e bancos) interajam em uma plataforma centralizada para a gestão de contratos e análise financeira. A implementação segue o padrão <b>MVC</b> utilizando <b>Java</b> e <b>Spring Boot</b>, conforme os requisitos da Sprint.
+        Este projeto foi desenvolvido para a disciplina de <b>Laboratório de Desenvolvimento de Software</b> do curso de Engenharia de Software na <b>PUC Minas</b>. O sistema foca na automação do fluxo de locação, permitindo que usuários individuais (clientes) e agentes (empresas e bancos) interajam em uma plataforma centralizada para a gestão de contratos e análise financeira. A implementação segue o padrão <b>MVC</b> utilizando <b>Java</b>, conforme os requisitos da Sprint.
       </div>
     </td>
     <td>
@@ -23,7 +23,7 @@
 
 ## 🚧 Status do Projeto
 
-![Versão](https://img.shields.io/badge/Versão-v1.0.0-blue?style=for-the-badge) ![Java](https://img.shields.io/badge/Java-17-007ec6?style=for-the-badge&logo=openjdk&logoColor=white) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.5-007ec6?style=for-the-badge&logo=springboot&logoColor=white) ![MVC](https://img.shields.io/badge/Arquitetura-MVC-orange?style=for-the-badge)
+![Versão](https://img.shields.io/badge/Versão-v1.0.0-blue?style=for-the-badge) ![Java](https://img.shields.io/badge/Java-17-007ec6?style=for-the-badge&logo=openjdk&logoColor=white) ![MVC](https://img.shields.io/badge/Arquitetura-MVC-orange?style=for-the-badge)
 
 ---
 
@@ -62,7 +62,6 @@ O sistema visa apoiar a gestão completa de aluguéis de automóveis em um ambie
 
 ### 🖥️ Back-end
 * **Linguagem:** Java (JDK 17+)
-* **Framework:** Spring Boot / Spring MVC
 * **Arquitetura:** MVC (Model-View-Controller)
 
 ### 💻 Front-end
