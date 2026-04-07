@@ -1,0 +1,170 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/Users/miguel/.m2/wrapper/dists/apache-maven-3.9.13-bin/6afe068c/apache-maven-3.9.13/lib/jansi-2.4.2.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for com.aluguelcarros:aluguelcarros:jar:0.1
+[WARNING] 'dependencyManagement.dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: com.vladsch.flexmark:flexmark-html2md-converter:jar -> version ${html2md.converter.version} vs ${flexmark.version} @ io.micronaut.platform:micronaut-platform:4.10.11, /Users/miguel/.m2/repository/io/micronaut/platform/micronaut-platform/4.10.11/micronaut-platform-4.10.11.pom, line 3132, column 19
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] 
+[INFO] ------------------< com.aluguelcarros:aluguelcarros >-------------------
+[INFO] Building aluguelcarros 0.1
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> mn:4.11.6:run (default-cli) > process-classes @ aluguelcarros >>>
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (micronaut-enforce) @ aluguelcarros ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 1: io.micronaut.maven.enforcer.CheckSnakeYaml passed
+[INFO] 
+[INFO] --- mn:4.11.6:generate-import-factory (default-generate-import-factory) @ aluguelcarros ---
+[INFO] 
+[INFO] --- mn:4.11.6:generate-openapi-generic (default-generate-openapi-generic) @ aluguelcarros ---
+[INFO] 
+[INFO] --- mn:4.11.6:generate-openapi-client (default-generate-openapi-client) @ aluguelcarros ---
+[INFO] 
+[INFO] --- mn:4.11.6:generate-openapi-server (default-generate-openapi-server) @ aluguelcarros ---
+[INFO] 
+[INFO] --- mn:4.11.6:generate-jsonschema (default-generate-jsonschema) @ aluguelcarros ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ aluguelcarros ---
+[INFO] Copying 3 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ aluguelcarros ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] <<< mn:4.11.6:run (default-cli) < process-classes @ aluguelcarros <<<
+[INFO] 
+[INFO] 
+[INFO] --- mn:4.11.6:run (default-cli) @ aluguelcarros ---
+[INFO] 👀 Watching for changes in [src/main/java, src/main/resources]
+ __  __ _                                  _   
+|  \/  (_) ___ _ __ ___  _ __   __ _ _   _| |_ 
+| |\/| | |/ __| '__/ _ \| '_ \ / _` | | | | __|
+| |  | | | (__| | | (_) | | | | (_| | |_| | |_ 
+|_|  |_|_|\___|_|  \___/|_| |_|\__,_|\__,_|\__|
+[36m12:11:36.821[0;39m [1;30m[main][0;39m [34mINFO [0;39m [35mio.micronaut.runtime.Micronaut[0;39m - Startup completed in 315ms. Server Running: http://localhost:8080
+[INFO] 📝 Detected change in src/main/java/com/aluguelcarros/controller/HomeController.java. Recompiling/restarting...
+[INFO] [ERROR] COMPILATION ERROR : 
+[INFO] [ERROR] /Users/miguel/Documents/puc/repos/Sistema-Aluguel-de-Carros/src/main/java/com/aluguelcarros/controller/HomeController.java:[3,28] cannot find symbol
+[INFO]   symbol:   class ClassPathResource
+[INFO]   location: package io.micronaut.core.io
+[INFO] [ERROR] /Users/miguel/Documents/puc/repos/Sistema-Aluguel-de-Carros/src/main/java/com/aluguelcarros/controller/HomeController.java:[13,25] cannot find symbol
+[INFO]   symbol:   class ClassPathResource
+[INFO]   location: class com.aluguelcarros.controller.HomeController
+[INFO] [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.14.1:compile (default-compile) on project aluguelcarros: Compilation failure: Compilation failure: 
+[INFO] [ERROR] /Users/miguel/Documents/puc/repos/Sistema-Aluguel-de-Carros/src/main/java/com/aluguelcarros/controller/HomeController.java:[3,28] cannot find symbol
+[INFO] [ERROR]   symbol:   class ClassPathResource
+[INFO] [ERROR]   location: package io.micronaut.core.io
+[INFO] [ERROR] /Users/miguel/Documents/puc/repos/Sistema-Aluguel-de-Carros/src/main/java/com/aluguelcarros/controller/HomeController.java:[13,25] cannot find symbol
+[INFO] [ERROR]   symbol:   class ClassPathResource
+[INFO] [ERROR]   location: class com.aluguelcarros.controller.HomeController
+[INFO] [ERROR] -> [Help 1]
+[INFO] [ERROR] 
+[INFO] [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[INFO] [ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[INFO] [ERROR] 
+[INFO] [ERROR] For more information about the errors and possible solutions, please read the following articles:
+[INFO] [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+ __  __ _                                  _   
+|  \/  (_) ___ _ __ ___  _ __   __ _ _   _| |_ 
+| |\/| | |/ __| '__/ _ \| '_ \ / _` | | | | __|
+| |  | | | (__| | | (_) | | | | (_| | |_| | |_ 
+|_|  |_|_|\___|_|  \___/|_| |_|\__,_|\__,_|\__|
+[36m12:18:02.559[0;39m [1;30m[main][0;39m [1;31mERROR[0;39m [35mi.m.h.server.netty.NettyHttpServer[0;39m - Unable to start server. Port *:8080 already in use.
+[36m12:18:02.567[0;39m [1;30m[main][0;39m [1;31mERROR[0;39m [35mio.micronaut.runtime.Micronaut[0;39m - Error starting Micronaut server: Unable to start Micronaut server on *:8080
+io.micronaut.http.server.exceptions.ServerStartupException: Unable to start Micronaut server on *:8080
+	at io.micronaut.http.server.netty.NettyHttpServer.bind(NettyHttpServer.java:680)
+	at io.micronaut.http.server.netty.NettyHttpServer.start(NettyHttpServer.java:322)
+	at io.micronaut.http.server.netty.NettyHttpServer.start(NettyHttpServer.java:132)
+	at io.micronaut.runtime.Micronaut.start(Micronaut.java:81)
+	at io.micronaut.runtime.Micronaut.run(Micronaut.java:347)
+	at io.micronaut.runtime.Micronaut.run(Micronaut.java:333)
+	at com.aluguelcarros.Application.main(Application.java:8)
+Caused by: java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:522)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:335)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:297)
+	at io.netty.channel.socket.nio.NioServerSocketChannel.doBind(NioServerSocketChannel.java:148)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.bind(AbstractChannel.java:431)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.bind(DefaultChannelPipeline.java:1353)
+	at io.netty.channel.AbstractChannelHandlerContext.bind(AbstractChannelHandlerContext.java:500)
+	at io.netty.channel.DefaultChannelPipeline.bind(DefaultChannelPipeline.java:994)
+	at io.netty.channel.Channel.bind(Channel.java:302)
+	at io.netty.bootstrap.AbstractBootstrap$1.run(AbstractBootstrap.java:381)
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:148)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:141)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:535)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:201)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1195)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+	Suppressed: java.util.concurrent.CompletionException: Rethrowing promise failure cause
+		at io.netty.util.concurrent.DefaultPromise.rethrowIfFailed(DefaultPromise.java:686)
+		at io.netty.util.concurrent.DefaultPromise.syncUninterruptibly(DefaultPromise.java:427)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:125)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:30)
+		at io.micronaut.http.server.netty.NettyHttpServer.bind(NettyHttpServer.java:635)
+		at io.micronaut.http.server.netty.NettyHttpServer.start(NettyHttpServer.java:322)
+		at io.micronaut.http.server.netty.NettyHttpServer.start(NettyHttpServer.java:132)
+		at io.micronaut.runtime.Micronaut.start(Micronaut.java:81)
+		at io.micronaut.runtime.Micronaut.run(Micronaut.java:347)
+		at io.micronaut.runtime.Micronaut.run(Micronaut.java:333)
+		at com.aluguelcarros.Application.main(Application.java:8)
+[INFO] 📝 Detected change in src/main/java/com/aluguelcarros/controller/HomeController.java. Recompiling/restarting...
+ __  __ _                                  _   
+|  \/  (_) ___ _ __ ___  _ __   __ _ _   _| |_ 
+| |\/| | |/ __| '__/ _ \| '_ \ / _` | | | | __|
+| |  | | | (__| | | (_) | | | | (_| | |_| | |_ 
+|_|  |_|_|\___|_|  \___/|_| |_|\__,_|\__,_|\__|
+[36m12:18:34.378[0;39m [1;30m[main][0;39m [1;31mERROR[0;39m [35mi.m.h.server.netty.NettyHttpServer[0;39m - Unable to start server. Port *:8080 already in use.
+[36m12:18:34.389[0;39m [1;30m[main][0;39m [1;31mERROR[0;39m [35mio.micronaut.runtime.Micronaut[0;39m - Error starting Micronaut server: Unable to start Micronaut server on *:8080
+io.micronaut.http.server.exceptions.ServerStartupException: Unable to start Micronaut server on *:8080
+	at io.micronaut.http.server.netty.NettyHttpServer.bind(NettyHttpServer.java:680)
+	at io.micronaut.http.server.netty.NettyHttpServer.start(NettyHttpServer.java:322)
+	at io.micronaut.http.server.netty.NettyHttpServer.start(NettyHttpServer.java:132)
+	at io.micronaut.runtime.Micronaut.start(Micronaut.java:81)
+	at io.micronaut.runtime.Micronaut.run(Micronaut.java:347)
+	at io.micronaut.runtime.Micronaut.run(Micronaut.java:333)
+	at com.aluguelcarros.Application.main(Application.java:8)
+Caused by: java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:522)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:335)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:297)
+	at io.netty.channel.socket.nio.NioServerSocketChannel.doBind(NioServerSocketChannel.java:148)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.bind(AbstractChannel.java:431)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.bind(DefaultChannelPipeline.java:1353)
+	at io.netty.channel.AbstractChannelHandlerContext.bind(AbstractChannelHandlerContext.java:500)
+	at io.netty.channel.DefaultChannelPipeline.bind(DefaultChannelPipeline.java:994)
+	at io.netty.channel.Channel.bind(Channel.java:302)
+	at io.netty.bootstrap.AbstractBootstrap$1.run(AbstractBootstrap.java:381)
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:148)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:141)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:535)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:201)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1195)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+	Suppressed: java.util.concurrent.CompletionException: Rethrowing promise failure cause
+		at io.netty.util.concurrent.DefaultPromise.rethrowIfFailed(DefaultPromise.java:686)
+		at io.netty.util.concurrent.DefaultPromise.syncUninterruptibly(DefaultPromise.java:427)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:125)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:30)
+		at io.micronaut.http.server.netty.NettyHttpServer.bind(NettyHttpServer.java:635)
+		at io.micronaut.http.server.netty.NettyHttpServer.start(NettyHttpServer.java:322)
+		at io.micronaut.http.server.netty.NettyHttpServer.start(NettyHttpServer.java:132)
+		at io.micronaut.runtime.Micronaut.start(Micronaut.java:81)
+		at io.micronaut.runtime.Micronaut.run(Micronaut.java:347)
+		at io.micronaut.runtime.Micronaut.run(Micronaut.java:333)
+		at com.aluguelcarros.Application.main(Application.java:8)
