@@ -3,6 +3,10 @@ package com.aluguelcarros.dto;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.validation.constraints.NotBlank;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Data Transfer Object para Cliente
  * Utilizado para transferência de dados entre camadas
@@ -27,24 +31,30 @@ public class ClienteDTO {
     @NotBlank(message = "Profissão não pode ser vazia")
     private String profissao;
 
+    private String senha;
+
+    private List<BigDecimal> rendimentos = new ArrayList<>();
+
     public ClienteDTO() {
     }
 
-    public ClienteDTO(Long id, String rg, String cpf, String nome, String endereco, String profissao) {
+    public ClienteDTO(Long id, String rg, String cpf, String nome, String endereco, String profissao, String senha) {
         this.id = id;
         this.rg = rg;
         this.cpf = cpf;
         this.nome = nome;
         this.endereco = endereco;
         this.profissao = profissao;
+        this.senha = senha;
     }
 
-    public ClienteDTO(String rg, String cpf, String nome, String endereco, String profissao) {
+    public ClienteDTO(String rg, String cpf, String nome, String endereco, String profissao, String senha) {
         this.rg = rg;
         this.cpf = cpf;
         this.nome = nome;
         this.endereco = endereco;
         this.profissao = profissao;
+        this.senha = senha;
     }
 
     // Getters and Setters
@@ -96,6 +106,22 @@ public class ClienteDTO {
         this.profissao = profissao;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public List<BigDecimal> getRendimentos() {
+        return rendimentos;
+    }
+
+    public void setRendimentos(List<BigDecimal> rendimentos) {
+        this.rendimentos = rendimentos;
+    }
+
     @Override
     public String toString() {
         return "ClienteDTO{" +
@@ -105,6 +131,7 @@ public class ClienteDTO {
                 ", nome='" + nome + '\'' +
                 ", endereco='" + endereco + '\'' +
                 ", profissao='" + profissao + '\'' +
+                ", rendimentos=" + rendimentos +
                 '}';
     }
 }
