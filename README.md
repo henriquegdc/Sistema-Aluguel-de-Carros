@@ -37,7 +37,6 @@
 - [Principais Endpoints](#principais-endpoints)
 - [Estrutura de Pastas](#estrutura-de-pastas)
 - [Testes](#testes)
-- [Deploy](#deploy)
 - [Autores](#autores)
 - [Agradecimentos](#agradecimentos)
 - [Licenca](#licenca)
