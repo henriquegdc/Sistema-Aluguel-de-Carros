@@ -1,14 +1,10 @@
-# 🏎️ Sistema de Aluguel de Carros 👨‍💻
-
-> [!NOTE]
-> Sistema web para apoio à gestão de aluguéis de automóveis que permite efetuar, cancelar e modificar pedidos através da Internet.
-> **Logo sugerida:** Um ícone de um cronômetro sobreposto a uma silhueta de veículo, simbolizando agilidade no aluguel.
+# Sistema de Aluguel de Carros
 
 <table>
   <tr>
     <td width="800px">
       <div align="justify">
-        Este projeto foi desenvolvido para a disciplina de <b>Laboratório de Desenvolvimento de Software</b> do curso de Engenharia de Software na <b>PUC Minas</b>. O sistema foca na automação do fluxo de locação, permitindo que usuários individuais (clientes) e agentes (empresas e bancos) interajam em uma plataforma centralizada para a gestão de contratos e análise financeira. A implementação segue o padrão <b>MVC</b> utilizando <b>Java</b>, conforme os requisitos da Sprint.
+        Este projeto foi desenvolvido para a disciplina de <b>Laboratorio de Desenvolvimento de Software</b> do curso de Engenharia de Software na <b>PUC Minas</b>. O sistema foca na automacao do fluxo de locacao, permitindo que usuarios individuais (clientes) e agentes (empresas e bancos) interajam em uma plataforma centralizada para a gestao de contratos e analise financeira. A implementacao segue o padrao <b>MVC</b> com foco em <b>API REST</b> utilizando <b>Java + Micronaut</b>, conforme os requisitos da disciplina.
       </div>
     </td>
     <td>
@@ -16,108 +12,301 @@
         <img src="https://github.com/henriquegdc/Sistema-Aluguel-de-Carros/blob/main/IMG/logo_ES_vertical.png" alt="Logo do Projeto" width="350px"/>
       </div>
     </td>
-  </tr> 
+  </tr>
 </table>
 
 ---
 
-## 🚧 Status do Projeto
+## Status do Projeto
 
-![Versão](https://img.shields.io/badge/Versão-v1.0.0-blue?style=for-the-badge) ![Java](https://img.shields.io/badge/Java-17-007ec6?style=for-the-badge&logo=openjdk&logoColor=white) ![MVC](https://img.shields.io/badge/Arquitetura-MVC-orange?style=for-the-badge)
-
----
-
-## 📚 Índice
-- [Sobre o Projeto](#-sobre-o-projeto)
-- [Funcionalidades Principais](#-funcionalidades-principais)
-- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
-- [Arquitetura](#-arquitetura)
-- [Instalação e Execução](#-instalação-e-execução)
-- [Estrutura de Pastas](#-estrutura-de-pastas)
-- [Autores](#-autores)
-- [Agradecimentos](#-agradecimentos)
+![Versao](https://img.shields.io/badge/Versao-v1.0.0-blue?style=for-the-badge)
+![Java](https://img.shields.io/badge/Java-21-007ec6?style=for-the-badge&logo=openjdk&logoColor=white)
+![Micronaut](https://img.shields.io/badge/Micronaut-4.8.9-1f6feb?style=for-the-badge)
+![API](https://img.shields.io/badge/Arquitetura-API_REST-orange?style=for-the-badge)
 
 ---
 
-## 📝 Sobre o Projeto
-O sistema visa apoiar a gestão completa de aluguéis de automóveis em um ambiente web.
+## Indice
 
-- **Por que ele existe:** Como parte da avaliação prática (Lab 02) para o 4º período de Engenharia de Software.
-- **Qual problema ele resolve:** Automatiza a introdução, modificação e cancelamento de pedidos de aluguel, além de integrar a análise financeira feita por bancos e empresas.
-- **Contexto:** Acadêmico, focado na aplicação de modelos UML (Casos de Uso, Classes, Componentes) em um ambiente de desenvolvimento Java.
-
----
-
-## ✨ Funcionalidades Principais
-- 🔐 **Cadastro Obrigatório:** O sistema exige cadastro prévio para acesso às funcionalidades.
-- 🚗 **Gestão de Aluguel:** Clientes podem introduzir, modificar, consultar e cancelar seus pedidos.
-- 🏦 **Intermediação de Agentes:** Empresas e bancos podem modificar e avaliar os pedidos financeiramente.
-- 💰 **Análise de Crédito:** Pedidos são analisados por agentes e, em caso positivo, avançam para execução de contrato.
-- 📋 **Dados do Contratante:** Registro de RG, CPF, Nome, Endereço, profissão e até 3 rendimentos auferidos.
-- 🏎️ **Cadastro de Automóveis:** Registro detalhado de matrícula, ano, marca, modelo e placa.
-
----
-
-## 🛠 Tecnologias Utilizadas
-
-### 🖥️ Back-end
-* **Linguagem:** Java (JDK 17+)
-* **Arquitetura:** MVC (Model-View-Controller)
-
-### 💻 Front-end
-* **Interface:** Construção dinâmica de páginas web ligadas ao servidor central
+- [Sobre o Projeto](#sobre-o-projeto)
+- [Funcionalidades Principais](#funcionalidades-principais)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Arquitetura](#arquitetura)
+- [Instalacao e Execucao](#instalacao-e-execucao)
+- [Configuracao](#configuracao)
+- [Principais Endpoints](#principais-endpoints)
+- [Estrutura de Pastas](#estrutura-de-pastas)
+- [Testes](#testes)
+- [Deploy](#deploy)
+- [Autores](#autores)
+- [Agradecimentos](#agradecimentos)
+- [Licenca](#licenca)
 
 ---
 
-## 🏗 Arquitetura
+## Sobre o Projeto
 
-O sistema é dividido em dois subsistemas fundamentais:
-1. **Gestão de Pedidos e Contratos:** Core da aplicação para regras de negócio.
-2. **Construção Dinâmica de Páginas:** Camada de apresentação web.
+O sistema visa apoiar a gestao completa de alugueis de automoveis.
 
-### Modelagem Técnica (Sprints)
-* **Sprint 01:** Diagramas de Casos de Uso, Classes, Pacotes e Histórias de Usuário.
-* **Sprint 02:** Diagrama de Componentes e implementação do CRUD de cliente.
-* **Sprint 03:** Diagrama de Implantação e protótipo para criação de pedidos.
+- **Por que ele existe:** como parte da avaliacao pratica (Lab 02) do curso de Engenharia de Software.
+- **Qual problema ele resolve:** automatiza cadastro de clientes, criacao/avaliacao de pedidos, gerenciamento de veiculos e geracao de contratos.
+- **Contexto:** academico, com aplicacao de UML e implementacao backend orientada a API HTTP/JSON.
 
 ---
 
-## 🔧 Instalação e Execução
+## Funcionalidades Principais
 
-### Pré-requisitos
-* Java JDK 17+ instalado.
-* Maven para gestão de dependências.
+- Cadastro, consulta, atualizacao e remocao de clientes.
+- Cadastro e autenticacao de cliente (CPF + senha).
+- Login de agente por codigo.
+- Cadastro e consulta de veiculos, incluindo listagem de disponiveis.
+- Criacao, alteracao, consulta e cancelamento de pedidos.
+- Avaliacao de pedidos por agentes com resultado APROVADO ou REJEITADO.
+- Geracao e consulta de contratos para pedidos aprovados.
+- Migracao automatica de banco com Flyway no startup.
 
-### Processo de Desenvolvimento
+---
 
-O projeto é dividido em três entregas (Sprints) principais:
+## Tecnologias Utilizadas
 
-* **Lab02S01:** Modelagem UML (Casos de Uso, Histórias do Usuário, Classes e Pacotes).
-* **Lab02S02:** Diagrama de Componentes e implementação do CRUD de cliente.
-* **Lab02S03:** Diagrama de Implantação e protótipo funcional para pedidos de aluguel.
+### Back-end
+
+- Java 21
+- Micronaut Framework 4.8.9
+- Micronaut Data JPA
+- Hibernate ORM
+- HikariCP
+
+### Banco de dados
+
+- PostgreSQL (ambiente local)
+- Flyway (migracoes)
+- H2 (ambiente de teste)
+
+### Build e testes
+
+- Maven Wrapper
+- JUnit 5
+- Micronaut Test
+
+---
+
+## Arquitetura
+
+O sistema esta organizado em camadas:
+
+1. **Controller:** exposicao dos endpoints HTTP.
+2. **Service:** regras de negocio.
+3. **Repository:** acesso a dados com Micronaut Data.
+4. **Model/DTO:** entidades persistentes e objetos de transporte.
+
+### Fluxo funcional
+
+1. Cliente ou agente autentica no sistema.
+2. Cliente cria pedido para um veiculo disponivel.
+3. Agente avalia o pedido.
+4. Pedido aprovado pode gerar contrato.
+
+### Observacao sobre interface
+
+As pastas `src/main/resources/views` e `src/main/resources/static` foram preservadas na estrutura do projeto, mas a aplicacao atual esta operando como API REST (sem frontend ativo).
+
+---
+
+## Instalacao e Execucao
+
+### Pre-requisitos
+
+- Java JDK 21 instalado.
+- PostgreSQL em execucao local.
+- Bash (Git Bash/WSL) para executar os comandos abaixo.
+
+### Clonar o repositorio
+
+```bash
+git clone https://github.com/henriquegdc/Sistema-Aluguel-de-Carros.git
+cd "Sistema-Aluguel-de-Carros"
+```
+
+### Build e execucao
+
+```bash
+./mvnw clean compile
+./mvnw mn:run
+```
+
+Teste rapido de saude:
+
+```bash
+curl -s http://localhost:8080/
+```
+
+Resposta esperada:
+
+```json
+{"service":"aluguelcarros-api","status":"UP"}
+```
+
+---
+
+## Configuracao
+
+As configuracoes de runtime estao no arquivo `src/main/resources/application.yml`.
+
+Variaveis de ambiente utilizadas:
+
+- `JDBC_URL` (padrao: `jdbc:postgresql://localhost:5432/aluguelcarros`)
+- `DB_USER` (padrao: `postgres`)
+- `DB_PASSWORD` (padrao: `postgres`)
+
+Exemplo:
+
+```bash
+export JDBC_URL='jdbc:postgresql://localhost:5432/aluguelcarros'
+export DB_USER='postgres'
+export DB_PASSWORD='postgres'
+```
+
+Criacao do banco:
+
+```bash
+psql -U postgres -h localhost -c "CREATE DATABASE aluguelcarros;"
+```
+
+Observacoes:
+
+- O Flyway aplica automaticamente `src/main/resources/db/migration/V1__init_schema.sql` ao iniciar.
+- O seed inicial inclui agentes com codigos `BNC-001` e `EMP-001`.
+
+---
+
+## Principais Endpoints
+
+Base URL local: `http://localhost:8080`
+
+### Autenticacao
+
+- `POST /api/auth/login/agente`
+- `POST /api/auth/login/cliente`
+- `POST /api/auth/cadastro/cliente`
+
+```bash
+curl -s -X POST http://localhost:8080/api/auth/login/agente \
+  -H 'Content-Type: application/json' \
+  -d '{"codigo":"BNC-001"}'
+```
+
+### Clientes
+
+- `GET /api/clientes`
+- `GET /api/clientes/{id}`
+- `POST /api/clientes`
+- `PUT /api/clientes/{id}`
+- `DELETE /api/clientes/{id}`
+
+### Agentes
+
+- `GET /api/agentes`
+- `GET /api/agentes?codigo={codigo}`
+- `GET /api/agentes/{id}`
+
+### Veiculos
+
+- `GET /api/veiculos`
+- `GET /api/veiculos/disponiveis`
+- `GET /api/veiculos/{id}`
+- `POST /api/veiculos`
+- `PUT /api/veiculos/{id}`
+- `DELETE /api/veiculos/{id}`
+
+### Pedidos
+
+- `GET /api/pedidos/cliente/{clienteId}`
+- `GET /api/pedidos/pendentes`
+- `POST /api/pedidos`
+- `PUT /api/pedidos/{pedidoId}`
+- `POST /api/pedidos/{pedidoId}/cancelar/{clienteId}`
+- `POST /api/pedidos/{pedidoId}/avaliar/{agenteId}/{resultado}?comentario=...`
+
+Valores para `resultado`: `APROVADO`, `REJEITADO`.
+
+### Contratos
+
+- `POST /api/contratos/pedido/{pedidoId}/{tipoContrato}`
+- `GET /api/contratos/{id}`
+- `GET /api/contratos/pedido/{pedidoId}`
+- `GET /api/contratos/cliente/{clienteId}`
+
+Valores para `tipoContrato`: `LOCACAO`, `LEASING`, `FINANCIAMENTO`.
+
+---
+
+## Estrutura de Pastas
+
+```text
+src/
+  main/
+    java/com/aluguelcarros/
+      controller/
+      service/
+      repository/
+      model/
+      dto/
+      facade/
+      config/
+      exception/
+      enums/
+    resources/
+      application.yml
+      application-test.yml
+      db/migration/V1__init_schema.sql
+      static/.gitkeep
+      views/.gitkeep
+  test/
+    java/com/aluguelcarros/AluguelcarrosTest.java
+```
+
+---
+
+## Testes
+
+Executar testes automatizados:
+
+```bash
+./mvnw test
+```
+
+Detalhes:
+
+- O perfil de testes utiliza H2 em memoria.
+- O teste atual valida a inicializacao do contexto Micronaut.
 
 
 ---
 
-## 👥 Autores
-Este projeto foi desenvolvido individualmente como parte das atividades práticas do curso de Engenharia de Software.
+## Autores
 
-| 👤 Nome | 🖼️ Foto | :octocat: GitHub | 💼 LinkedIn | 📤 Gmail |
-|---------|----------|-----------------|-------------|-----------|
-| **João Pedro Moura** | <div align="center"><img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" width="70px" height="70px"></div> | <div align="center"><a href="https://github.com/joaopedromoura"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="https://www.linkedin.com/in/joaopedromoura"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="mailto:joaopedromoura@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
-| **Miguel** | <div align="center"><img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" width="70px" height="70px"></div> | <div align="center"><a href="https://github.com/joaopedromoura"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="https://www.linkedin.com/in/joaopedromoura"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="mailto:joaopedromoura@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
-| **Henrique** | <div align="center"><img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" width="70px" height="70px"></div> | <div align="center"><a href="https://github.com/joaopedromoura"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="https://www.linkedin.com/in/joaopedromoura"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="mailto:joaopedromoura@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
+Este projeto foi desenvolvido no contexto das atividades praticas do curso de Engenharia de Software.
 
+| Nome | GitHub |
+|------|--------|
+| Joao Pedro Moura | [@joaopedromoura](https://github.com/joaopedromoura) |
+| Miguel |  adicionar perfil oficial |
+| Henrique Carvalho | [@henrquegdc](https://github.com/henriquegdc) |
+
+---
+
+## Agradecimentos
+
+Gostaria de registrar agradecimento a quem contribuiu para a realizacao deste trabalho academico:
+
+- [Engenharia de Software PUC Minas](https://www.instagram.com/engsoftwarepucminas/) pelo suporte institucional.
+- [Prof. Joao Paulo Carneiro Aramuni](https://github.com/joaopauloaramuni) pelas orientacoes tecnicas e condução da disciplina.
 
 ---
 
-## 🙏 Agradecimentos
-Gostaria de expressar gratidão às instituições e profissionais que viabilizaram a execução deste projeto acadêmico:
+## Licenca
 
-* [**Engenharia de Software PUC Minas**](https://www.instagram.com/engsoftwarepucminas/) - Pelo suporte institucional e pela sólida estrutura acadêmica fornecida durante o 4º período.
-* [**Prof.João Paulo Carneiro Aramuni**](https://github.com/joaopauloaramuni) - Pelas orientações técnicas, fornecimento do material base e condução da disciplina de Laboratório de Desenvolvimento de Software.
-
-
----
+Distribuido sob licenca MIT. Consulte o arquivo `LICENSE` para mais detalhes.
 
 
