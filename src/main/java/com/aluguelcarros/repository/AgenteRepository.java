@@ -1,12 +1,12 @@
 package com.aluguelcarros.repository;
 
-import com.aluguelcarros.model.Avaliacao;
+import com.aluguelcarros.model.Agente;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
 @Repository
-public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Long> {
-	Optional<Avaliacao> findByPedidoId(Long pedidoId);
+public interface AgenteRepository extends JpaRepository<Agente, Long> {
+    Optional<Agente> findByCodigo(String codigo);
 }
