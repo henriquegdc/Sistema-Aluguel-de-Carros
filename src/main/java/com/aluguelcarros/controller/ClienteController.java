@@ -20,7 +20,7 @@ import java.util.List;
  * - PUT  /clientes/{id}      - Atualizar cliente
  * - DELETE /clientes/{id}    - Deletar cliente
  */
-@Controller("/clientes")
+@Controller("/api/clientes")
 public class ClienteController {
 
     @Inject
