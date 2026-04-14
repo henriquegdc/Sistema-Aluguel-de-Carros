@@ -1,0 +1,269 @@
+/* =========================================
+   1. VARIÁVEIS DE TEMA (Paleta de Cores)
+   ========================================= */
+:root {
+  /* Cores Principais */
+  --primary: #0f172a;        /* Azul Escuro (Quase Preto) para um tom executivo */
+  --primary-hover: #1e293b;
+  --secondary: #3b82f6;      /* Azul vibrante para destaques */
+  --secondary-hover: #2563eb;
+  
+  /* Cores de Status */
+  --success: #10b981;        /* Verde para Aprovado/Disponível */
+  --success-hover: #059669;
+  --danger: #ef4444;         /* Vermelho para Cancelado/Excluído */
+  --danger-hover: #dc2626;
+  --warning: #f59e0b;        /* Amarelo para Pendente */
+  
+  /* Fundo e Textos */
+  --bg-color: #f1f5f9;       /* Cinza bem claro para o fundo do site */
+  --surface: #ffffff;        /* Branco puro para os cartões */
+  --text-main: #0f172a;      /* Texto principal escuro */
+  --text-muted: #64748b;     /* Texto secundário acinzentado */
+  --border-color: #e2e8f0;   /* Cor das bordas suaves */
+
+  /* Sombras e Bordas */
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --transition: all 0.3s ease;
+}
+
+/* =========================================
+   2. RESET E TIPOGRAFIA
+   ========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1, h2, h3 { color: var(--primary); margin-bottom: 1rem; }
+p { line-height: 1.6; }
+
+/* =========================================
+   3. NAVEGAÇÃO (NavBar)
+   ========================================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 5%;
+  background-color: var(--primary);
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  list-style: none;
+}
+
+.nav-link {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.nav-link:hover { color: white; }
+.greeting { font-weight: 600; color: var(--secondary); }
+
+/* =========================================
+   4. LAYOUTS GERAIS E CONTAINERS
+   ========================================= */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.center-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px); /* Altura da tela menos a navbar */
+}
+
+/* =========================================
+   5. CARTÕES (Login, Vitrine e Dashboard)
+   ========================================= */
+.card {
+  background-color: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 2.5rem;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* Grid para a Vitrine de Veículos */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* =========================================
+   6. FORMULÁRIOS E INPUTS
+   ========================================= */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.input {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  background-color: #f8fafc;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.input:focus {
+  background-color: var(--surface);
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  outline: none;
+}
+
+/* =========================================
+   7. BOTÕES
+   ========================================= */
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  width: 100%; /* Por padrão ocupa tudo (bom para login) */
+}
+
+/* Para botões que não devem ocupar a linha toda (ex: NavBar, Tabelas) */
+.btn-auto { width: auto; }
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-primary { background-color: var(--secondary); color: white; }
+.btn-primary:hover:not(:disabled) { background-color: var(--secondary-hover); }
+
+.btn-success { background-color: var(--success); color: white; }
+.btn-success:hover:not(:disabled) { background-color: var(--success-hover); }
+
+.btn-danger { background-color: var(--danger); color: white; }
+.btn-danger:hover:not(:disabled) { background-color: var(--danger-hover); }
+
+.btn-outline { background-color: transparent; border: 2px solid var(--border-color); color: var(--text-main); }
+.btn-outline:hover:not(:disabled) { border-color: var(--secondary); color: var(--secondary); }
+
+/* =========================================
+   8. TABELAS (Gestão de Frota e Pedidos)
+   ========================================= */
+.table-container {
+  overflow-x: auto; /* Para não quebrar no celular */
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--surface);
+}
+
+.table th, .table td {
+  padding: 1.2rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.table tr:last-child td { border-bottom: none; }
+.table tr:hover { background-color: #f1f5f9; }
+
+/* =========================================
+   9. BADGES (Etiquetas de Status) E AVISOS
+   ========================================= */
+.badge {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge.pendente { background-color: #fef3c7; color: #d97706; }
+.badge.aprovado { background-color: #d1fae5; color: #059669; }
+.badge.rejeitado { background-color: #fee2e2; color: #dc2626; }
+
+.alert-error {
+  background-color: #fef2f2;
+  color: var(--danger);
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--danger);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

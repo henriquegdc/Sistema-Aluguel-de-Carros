@@ -3,94 +3,177 @@ import api from '../services/api';
 
 export default function GestaoVeiculos() {
   const [veiculos, setVeiculos] = useState([]);
-  const [editing, setEditing] = useState(null); // Guarda o veículo que está sendo editado
-  const [form, setForm] = useState({ matricula: '', marca: '', modelo: '', placa: '', ano: '', disponivel: true });
+  const [editing, setEditing] = useState(null);
+  const [erro, setErro] = useState(''); // Estado para capturar o erro exato do backend
+  const [form, setForm] = useState({ 
+    matricula: '', marca: '', modelo: '', placa: '', ano: '', disponivel: true 
+  });
 
   useEffect(() => { carregarVeiculos(); }, []);
 
   const carregarVeiculos = async () => {
-    const res = await api.get('/veiculos');
-    setVeiculos(res.data);
+    try {
+      const res = await api.get('/veiculos');
+      setVeiculos(res.data);
+    } catch (err) { 
+      console.error("Erro ao listar veículos", err);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErro(''); // Limpa erros antigos
+
     try {
+      // 1. O Java exige que o ano seja um Número Inteiro, e não um texto.
+      const payload = {
+        ...form,
+        ano: parseInt(form.ano, 10) // Conversão forçada para evitar Bad Request (400)
+      };
+
       if (editing) {
-        await api.put(`/veiculos/${editing}`, form);
+        await api.put(`/veiculos/${editing}`, payload);
+        alert('Veículo atualizado com sucesso!');
       } else {
-        await api.post('/veiculos', form);
+        await api.post('/veiculos', payload);
+        alert('Veículo cadastrado com sucesso!');
       }
-      alert('Veículo salvo com sucesso!');
+      
+      // Limpa o formulário após o sucesso
       setEditing(null);
       setForm({ matricula: '', marca: '', modelo: '', placa: '', ano: '', disponivel: true });
       carregarVeiculos();
-    } catch (err) { alert('Erro ao salvar veículo.'); }
+
+    } catch (err) {
+      // 2. Captura a mensagem de erro exata vinda do Micronaut/PostgreSQL
+      const mensagemBackend = err.response?.data?.message || err.response?.data?.erro || err.message;
+      setErro(`Erro ao salvar: ${mensagemBackend}`);
+    }
   };
 
   const handleEdit = (v) => {
     setEditing(v.id);
     setForm({ ...v });
+    window.scrollTo(0, 0); // Sobe a tela para o formulário
   };
 
   const handleDeletar = async (id) => {
-    if (!window.confirm("Remover este veículo?")) return;
-    await api.delete(`/veiculos/${id}`);
-    carregarVeiculos();
+    if (!window.confirm("Tem certeza que deseja remover este veículo permanentemente?")) return;
+    try {
+      await api.delete(`/veiculos/${id}`);
+      carregarVeiculos();
+    } catch (err) {
+      alert("Erro ao excluir. O veículo pode estar vinculado a um pedido.");
+    }
   };
 
   return (
-    <div style={{padding: '30px'}}>
-      <h2>Gestão de Frota</h2>
+    <div className="container">
+      <h2>Gestão de Frota Automotiva</h2>
+      <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
+        Cadastre novos veículos ou atualize o status da frota existente.
+      </p>
+
+      {/* Caixa de Erro Visível */}
+      {erro && (
+        <div className="alert-error">
+          <strong>Atenção: </strong> {erro}
+        </div>
+      )}
       
-      {/* Formulário de Cadastro/Edição */}
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <h3>{editing ? 'Editar Veículo' : 'Novo Veículo'}</h3>
-        <div style={styles.row}>
-          <input placeholder="Marca" value={form.marca} onChange={e => setForm({...form, marca: e.target.value})} required style={styles.input}/>
-          <input placeholder="Modelo" value={form.modelo} onChange={e => setForm({...form, modelo: e.target.value})} required style={styles.input}/>
-        </div>
-        <div style={styles.row}>
-          <input placeholder="Placa" value={form.placa} onChange={e => setForm({...form, placa: e.target.value})} required style={styles.input}/>
-          <input placeholder="Matrícula" value={form.matricula} onChange={e => setForm({...form, matricula: e.target.value})} required style={styles.input}/>
-          <input placeholder="Ano" type="number" value={form.ano} onChange={e => setForm({...form, ano: e.target.value})} required style={styles.input}/>
-        </div>
-        <button type="submit" style={styles.saveBtn}>{editing ? 'Atualizar' : 'Cadastrar Veículo'}</button>
-        {editing && <button type="button" onClick={() => setEditing(null)}>Cancelar</button>}
-      </form>
+      {/* Formulário de Cadastro/Edição com Visual de Cartão */}
+      <div className="card" style={{ marginBottom: '3rem' }}>
+        <h3 style={{ marginBottom: '1.5rem', color: 'var(--primary)' }}>
+          {editing ? '✏️ Editar Veículo Selecionado' : '🚗 Cadastrar Novo Veículo'}
+        </h3>
+        
+        <form onSubmit={handleSubmit}>
+          <div className="grid">
+            <div className="form-group">
+              <label>Marca</label>
+              <input className="input" placeholder="Ex: Toyota" value={form.marca} onChange={e => setForm({...form, marca: e.target.value})} required />
+            </div>
+            
+            <div className="form-group">
+              <label>Modelo</label>
+              <input className="input" placeholder="Ex: Corolla XEI" value={form.modelo} onChange={e => setForm({...form, modelo: e.target.value})} required />
+            </div>
+
+            <div className="form-group">
+              <label>Placa (Única)</label>
+              <input className="input" placeholder="ABC-1234" value={form.placa} onChange={e => setForm({...form, placa: e.target.value})} required />
+            </div>
+
+            <div className="form-group">
+              <label>Matrícula (Única)</label>
+              <input className="input" placeholder="Ex: 987654321" value={form.matricula} onChange={e => setForm({...form, matricula: e.target.value})} required />
+            </div>
+
+            <div className="form-group">
+              <label>Ano de Fabricação</label>
+              <input className="input" type="number" min="1990" max="2025" placeholder="Ex: 2022" value={form.ano} onChange={e => setForm({...form, ano: e.target.value})} required />
+            </div>
+          </div>
+
+          <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
+            <button type="submit" className="btn btn-primary">
+              {editing ? 'Guardar Alterações' : 'Adicionar à Frota'}
+            </button>
+            {editing && (
+              <button type="button" className="btn btn-outline" onClick={() => {
+                setEditing(null);
+                setForm({ matricula: '', marca: '', modelo: '', placa: '', ano: '', disponivel: true });
+                setErro('');
+              }}>
+                Cancelar Edição
+              </button>
+            )}
+          </div>
+        </form>
+      </div>
 
       {/* Tabela de Listagem */}
-      <table style={styles.table}>
-        <thead>
-          <tr>
-            <th>Marca/Modelo</th>
-            <th>Placa</th>
-            <th>Status</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {veiculos.map(v => (
-            <tr key={v.id}>
-              <td>{v.marca} {v.modelo} ({v.ano})</td>
-              <td>{v.placa}</td>
-              <td>{v.disponivel ? '✅ Disponível' : '❌ Alugado'}</td>
-              <td>
-                <button onClick={() => handleEdit(v)}>Editar</button>
-                <button onClick={() => handleDeletar(v.id)} style={{color: 'red'}}>Excluir</button>
-              </td>
+      <div className="card" style={{ padding: '0', overflow: 'hidden' }}>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Veículo (Marca/Modelo)</th>
+              <th>Placa</th>
+              <th>Ano</th>
+              <th>Status</th>
+              <th style={{ textAlign: 'right' }}>Ações</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {veiculos.length === 0 ? (
+              <tr><td colSpan="6" style={{ textAlign: 'center', padding: '2rem' }}>Nenhum veículo cadastrado na frota.</td></tr>
+            ) : (
+              veiculos.map(v => (
+                <tr key={v.id}>
+                  <td style={{ color: 'var(--text-muted)' }}>#{v.id}</td>
+                  <td><strong>{v.marca}</strong> {v.modelo}</td>
+                  <td style={{ fontFamily: 'monospace', fontSize: '1.1rem' }}>{v.placa}</td>
+                  <td>{v.ano}</td>
+                  <td>
+                    <span className={`badge ${v.disponivel ? 'aprovado' : 'rejeitado'}`}>
+                      {v.disponivel ? 'Disponível' : 'Alugado'}
+                    </span>
+                  </td>
+                  <td style={{ textAlign: 'right', display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                    <button className="btn btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }} onClick={() => handleEdit(v)}>
+                      Editar
+                    </button>
+                    <button className="btn btn-danger" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }} onClick={() => handleDeletar(v.id)}>
+                      Excluir
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
-
-const styles = {
-  form: { backgroundColor: '#f9f9f9', padding: '20px', borderRadius: '8px', marginBottom: '30px' },
-  row: { display: 'flex', gap: '10px', marginBottom: '10px' },
-  input: { flex: 1, padding: '8px' },
-  saveBtn: { padding: '10px 20px', backgroundColor: '#007bff', color: '#fff', border: 'none', cursor: 'pointer' },
-  table: { width: '100%', borderCollapse: 'collapse', textAlign: 'left' }
-};
