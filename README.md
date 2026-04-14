@@ -76,6 +76,13 @@ O sistema visa apoiar a gestao completa de alugueis de automoveis.
 - Hibernate ORM
 - HikariCP
 
+### Front-end
+
+- React + Vite
+- Axios
+- Context API
+- CSS Global Customizado
+
 ### Banco de dados
 
 - PostgreSQL (ambiente local)
@@ -117,6 +124,7 @@ As pastas `src/main/resources/views` e `src/main/resources/static` foram preserv
 ### Pre-requisitos
 
 - Java JDK 21 instalado.
+- Node.js instalado (para o front-end).
 - PostgreSQL em execucao local.
 - Bash (Git Bash/WSL) para executar os comandos abaixo.
 
@@ -127,7 +135,9 @@ git clone https://github.com/henriquegdc/Sistema-Aluguel-de-Carros.git
 cd "Sistema-Aluguel-de-Carros"
 ```
 
-### Build e execucao
+### Back-end
+
+#### Build e execucao
 
 ```bash
 ./mvnw clean compile
@@ -145,6 +155,30 @@ Resposta esperada:
 ```json
 {"service":"aluguelcarros-api","status":"UP"}
 ```
+
+### 🚗 Front-end
+
+> **Importante:** Certifique-se de que o back-end esteja rodando na porta `8080` antes de iniciar o front-end.
+
+1. Navegue ate a pasta do frontend:
+
+```bash
+cd src/frontend
+```
+
+2. Instale as dependencias:
+
+```bash
+npm install
+```
+
+3. Inicie o servidor de desenvolvimento:
+
+```bash
+npm run dev
+```
+
+4. Acesse `http://localhost:5173` no seu navegador.
 
 ---
 
@@ -240,6 +274,18 @@ Valores para `tipoContrato`: `LOCACAO`, `LEASING`, `FINANCIAMENTO`.
 
 ---
 
+## 🔄 Fluxo de Utilizacao (User Journey)
+
+Para testar o sistema completo, siga estes passos:
+
+1. **Acesso Administrativo:** Faca login como Agente (`BNC-001`) e cadastre um veiculo novo.
+2. **Interesse do Cliente:** Faca logout, crie uma conta de cliente e solicite o aluguel do veiculo cadastrado na Vitrine.
+3. **Aprovacao:** Volte como Agente e altere o status do pedido para `APROVADO`.
+4. **Contrato:** Como Cliente, va em *Meus Pedidos* e clique em *Gerar Contrato*.
+5. **Validacao:** Verifique se o veiculo sumiu da Vitrine inicial.
+
+---
+
 ## Estrutura de Pastas
 
 ```text
@@ -261,6 +307,15 @@ src/
       db/migration/V1__init_schema.sql
       static/.gitkeep
       views/.gitkeep
+  frontend/
+    src/
+      components/       # Componentes reutilizaveis (NavBar, ProtectedRoute)
+      pages/            # Telas principais do sistema
+      services/
+        api.js          # Configuracao da instancia do Axios
+      contexts/
+        AuthContext.js  # Logica de login e persistencia de sessao
+      global.css        # Todos os estilos e temas do projeto
   test/
     java/com/aluguelcarros/AluguelcarrosTest.java
 ```
@@ -279,7 +334,6 @@ Detalhes:
 
 - O perfil de testes utiliza H2 em memoria.
 - O teste atual valida a inicializacao do contexto Micronaut.
-
 
 ---
 
@@ -307,5 +361,3 @@ Gostaria de registrar agradecimento a quem contribuiu para a realizacao deste tr
 ## Licenca
 
 Distribuido sob licenca MIT. Consulte o arquivo `LICENSE` para mais detalhes.
-
-
