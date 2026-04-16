@@ -1,75 +1,255 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import '../styles/NavBar.css';
 
 export default function NavBar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [menuAberto, setMenuAberto] = useState(false);
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
+    setMenuAberto(false);
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Link to="/" className="logo">
-          🚗 <span style={{ marginLeft: '10px' }}>AluguelCarros</span>
-        </Link>
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          className="logo-wrapper"
+          onClick={() => {
+            navigate('/');
+            setMenuAberto(false);
+          }}
+        >
+          <Link to="/" className="logo">
+            🚗 <span className="logo-text">AluguelCarros</span>
+          </Link>
+        </motion.div>
       </div>
 
-      <ul className="nav-menu">
+      {/* Hamburger Menu */}
+      <motion.button
+        className="hamburger"
+        onClick={() => setMenuAberto(!menuAberto)}
+        whileTap={{ scale: 0.95 }}
+        aria-label="Menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </motion.button>
+
+      {/* Menu Desktop e Mobile */}
+      <ul className={`nav-menu ${menuAberto ? 'active' : ''}`}>
         {/* === LINKS PÚBLICOS (Visíveis quando ninguém está logado) === */}
         {!user && (
           <>
-            <li>
-              <Link to="/login" className="nav-link">Entrar</Link>
-            </li>
-            <li>
-              <Link to="/cadastro" className="btn btn-primary">Registar</Link>
-            </li>
+            <motion.li
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  to="/login"
+                  className="nav-link"
+                  onClick={() => setMenuAberto(false)}
+                >
+                  Entrar
+                </Link>
+              </motion.div>
+            </motion.li>
+            <motion.li
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  to="/cadastro-cliente"
+                  className="btn btn-primary"
+                  onClick={() => setMenuAberto(false)}
+                >
+                  Registar
+                </Link>
+              </motion.div>
+            </motion.li>
           </>
         )}
 
         {/* === MENU DO CLIENTE === */}
-        {user?.perfil === 'CLIENTE' && (
+        {user?.tipo === 'cliente' && (
           <>
-            <li>
-              <Link to="/vitrine" className="nav-link">Frota Disponível</Link>
-            </li>
-            <li>
-              <Link to="/meus-pedidos" className="nav-link">Os Meus Pedidos</Link>
-            </li>
-            <li>
-              <Link to="/meus-contratos" className="nav-link">Contratos</Link>
-            </li>
-            <li className="greeting">
-              Olá, {user.nome.split(' ')[0]}
-            </li>
-            <li>
-              <button onClick={handleLogout} className="btn btn-danger">Sair</button>
-            </li>
+            <motion.li
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  to="/vitrine-veiculos"
+                  className="nav-link"
+                  onClick={() => setMenuAberto(false)}
+                >
+                  Frota Disponível
+                </Link>
+              </motion.div>
+            </motion.li>
+            <motion.li
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  to="/meus-pedidos"
+                  className="nav-link"
+                  onClick={() => setMenuAberto(false)}
+                >
+                  Os Meus Pedidos
+                </Link>
+              </motion.div>
+            </motion.li>
+            <motion.li
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  to="/meus-contratos"
+                  className="nav-link"
+                  onClick={() => setMenuAberto(false)}
+                >
+                  Contratos
+                </Link>
+              </motion.div>
+            </motion.li>
+            <motion.li
+              className="greeting"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.25 }}
+            >
+              👤 {user.nome?.split(' ')[0] || 'Cliente'}
+            </motion.li>
+            <motion.li
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <motion.button
+                className="btn btn-danger"
+                onClick={handleLogout}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Sair
+              </motion.button>
+            </motion.li>
           </>
         )}
 
         {/* === MENU DO AGENTE (Administrativo) === */}
-        {user?.perfil === 'AGENTE' && (
+        {user?.tipo === 'agente' && (
           <>
-            <li>
-              <Link to="/agente/dashboard" className="nav-link">Painel Inicial</Link>
-            </li>
-            <li>
-              <Link to="/agente/pedidos" className="nav-link">Análise de Pedidos</Link>
-            </li>
-            <li>
-              <Link to="/agente/veiculos" className="nav-link">Gestão de Frota</Link>
-            </li>
-            <li className="greeting" style={{ color: 'var(--primary)' }}>
-              Agente: {user.codigo}
-            </li>
-            <li>
-              <button onClick={handleLogout} className="btn btn-danger">Sair</button>
-            </li>
+            <motion.li
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  to="/dashboard-agente"
+                  className="nav-link"
+                  onClick={() => setMenuAberto(false)}
+                >
+                  Painel Inicial
+                </Link>
+              </motion.div>
+            </motion.li>
+            <motion.li
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  to="/analise-pedidos"
+                  className="nav-link"
+                  onClick={() => setMenuAberto(false)}
+                >
+                  Análise de Pedidos
+                </Link>
+              </motion.div>
+            </motion.li>
+            <motion.li
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  to="/gestao-veiculos"
+                  className="nav-link"
+                  onClick={() => setMenuAberto(false)}
+                >
+                  Gestão de Frota
+                </Link>
+              </motion.div>
+            </motion.li>
+            <motion.li
+              className="greeting"
+              style={{ color: 'var(--primary-light)' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.25 }}
+            >
+              👨‍💼 Agente
+            </motion.li>
+            <motion.li
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <motion.button
+                className="btn btn-danger"
+                onClick={handleLogout}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Sair
+              </motion.button>
+            </motion.li>
           </>
         )}
       </ul>

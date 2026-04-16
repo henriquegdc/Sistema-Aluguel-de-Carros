@@ -1,175 +1,247 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import '../styles/Login.css';
 
-export default function Login() {
-  const [tipoLogin, setTipoLogin] = useState('cliente'); // 'cliente' ou 'agente'
-  
-  // Estados para o formulário do Cliente
-  const [cpf, setCpf] = useState('');
+const Login = () => {
+  const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  
-  // Estado para o formulário do Agente
-  const [codigo, setCodigo] = useState('');
-  
-  // Estados de controle da tela
+  const [tipoUsuario, setTipoUsuario] = useState('cliente');
   const [erro, setErro] = useState('');
-  const [loadingForm, setLoadingForm] = useState(false);
+  const [carregando, setCarregando] = useState(false);
+  const [mostrarSenha, setMostrarSenha] = useState(false);
 
-  // Trazendo as funções do nosso contexto e ferramentas de navegação
-  const { loginCliente, loginAgente } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleLoginCliente = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErro('');
-    setLoadingForm(true);
+    setCarregando(true);
 
-    const res = await loginCliente(cpf, senha);
-    if (res.success) {
-      navigate('/vitrine'); // Se der certo, manda pra vitrine de carros!
-    } else {
-      setErro(res.message);
+    try {
+      // Validar campos
+      if (!email || !senha) {
+        setErro('Preencha todos os campos!');
+        setCarregando(false);
+        return;
+      }
+
+      // Fazer login
+      const resultado = await login(email, senha, tipoUsuario);
+
+      if (resultado.success) {
+        // Redirecionar baseado no tipo de usuário
+        const destino =
+          tipoUsuario === 'cliente' ? '/vitrine-veiculos' : '/dashboard-agente';
+        navigate(destino);
+      } else {
+        setErro(resultado.message || 'Erro ao fazer login');
+      }
+    } catch (err) {
+      console.error('Erro ao fazer login:', err);
+      setErro('Erro inesperado. Tente novamente.');
+    } finally {
+      setCarregando(false);
     }
-    
-    setLoadingForm(false);
   };
 
-  const handleLoginAgente = async (e) => {
-    e.preventDefault();
-    setErro('');
-    setLoadingForm(true);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.6 },
+    },
+  };
 
-    const res = await loginAgente(codigo);
-    if (res.success) {
-      navigate('/agente/dashboard'); // Se der certo, manda pro painel de controle!
-    } else {
-      setErro(res.message);
-    }
-    
-    setLoadingForm(false);
+  const formVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, delay: 0.2 },
+    },
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={{ textAlign: 'center' }}>Bem-vindo à Locadora</h2>
-        
-        {/* Seletor de Abas */}
-        <div style={styles.tabContainer}>
-          <button 
-            style={tipoLogin === 'cliente' ? styles.tabActive : styles.tab}
-            onClick={() => { setTipoLogin('cliente'); setErro(''); }}
-          >
-            Sou Cliente
-          </button>
-          <button 
-            style={tipoLogin === 'agente' ? styles.tabActive : styles.tab}
-            onClick={() => { setTipoLogin('agente'); setErro(''); }}
-          >
-            Sou Agente
-          </button>
-        </div>
+    <motion.div
+      className="container"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.div
+        className="loginBox"
+        variants={formVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div
+          className="header"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
+          <div className="logo">🚗</div>
+          <h1>Bem-vindo de volta!</h1>
+          <p>Faça login para continuar sua jornada</p>
+        </motion.div>
 
-        {/* Mensagem de Erro (se houver) */}
-        {erro && <div style={styles.errorBox}>{erro}</div>}
+        {/* Seletor de Tipo de Usuário */}
+        <motion.div
+          className="userTypeSelector"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          <button
+            type="button"
+            className={`typeBtn ${tipoUsuario === 'cliente' ? 'active' : ''}`}
+            onClick={() => {
+              setTipoUsuario('cliente');
+              setErro('');
+            }}
+            disabled={carregando}
+          >
+            👤 Cliente
+          </button>
+          <button
+            type="button"
+            className={`typeBtn ${tipoUsuario === 'agente' ? 'active' : ''}`}
+            onClick={() => {
+              setTipoUsuario('agente');
+              setErro('');
+            }}
+            disabled={carregando}
+          >
+            👨‍💼 Agente
+          </button>
+        </motion.div>
 
-        {/* Formulário de Cliente */}
-        {tipoLogin === 'cliente' && (
-          <form onSubmit={handleLoginCliente} style={styles.form}>
-            <div style={styles.inputGroup}>
-              <label>CPF (Apenas números)</label>
-              <input 
-                type="text" 
-                value={cpf}
-                onChange={(e) => setCpf(e.target.value)}
-                required
-                maxLength="11"
-                style={styles.input}
-                placeholder="Ex: 12345678900"
-              />
-            </div>
-            <div style={styles.inputGroup}>
-              <label>Senha</label>
-              <input 
-                type="password" 
+        {erro && (
+          <motion.div
+            className="error"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            ❌ {erro}
+          </motion.div>
+        )}
+
+        <motion.form
+          onSubmit={handleSubmit}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <motion.div
+            className="formGroup"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.55 }}
+          >
+            <label htmlFor="email">
+              <span className="icon">✉️</span>
+              {tipoUsuario === 'cliente' ? 'CPF ou Email' : 'Email'}
+            </label>
+            <input
+              type={tipoUsuario === 'cliente' ? 'text' : 'email'}
+              id="email"
+              placeholder={tipoUsuario === 'cliente' ? '000.000.000-00' : 'seu@email.com'}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={carregando}
+              required
+            />
+          </motion.div>
+
+          <motion.div
+            className="formGroup"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6 }}
+          >
+            <label htmlFor="senha">
+              <span className="icon">🔒</span>
+              Senha
+            </label>
+            <div className="passwordWrapper">
+              <input
+                type={mostrarSenha ? 'text' : 'password'}
+                id="senha"
+                placeholder="••••••••"
                 value={senha}
                 onChange={(e) => setSenha(e.target.value)}
+                disabled={carregando}
                 required
-                style={styles.input}
               />
+              <button
+                type="button"
+                className="togglePassword"
+                onClick={() => setMostrarSenha(!mostrarSenha)}
+                disabled={carregando}
+              >
+                {mostrarSenha ? '👁️' : '👁️‍🗨️'}
+              </button>
             </div>
-            <button type="submit" disabled={loadingForm} style={styles.button}>
-              {loadingForm ? 'Entrando...' : 'Entrar como Cliente'}
-            </button>
-            <p style={{ textAlign: 'center', marginTop: '10px', fontSize: '14px' }}>
-              Ainda não tem conta? <Link to="/cadastro">Cadastre-se aqui</Link>
-            </p>
-          </form>
-        )}
+          </motion.div>
 
-        {/* Formulário de Agente */}
-        {tipoLogin === 'agente' && (
-          <form onSubmit={handleLoginAgente} style={styles.form}>
-            <div style={styles.inputGroup}>
-              <label>Código de Acesso do Agente</label>
-              <input 
-                type="text" 
-                value={codigo}
-                onChange={(e) => setCodigo(e.target.value)}
-                required
-                style={styles.input}
-                placeholder="Ex: BNC-001 ou EMP-001"
-              />
-            </div>
-            <button type="submit" disabled={loadingForm} style={styles.button}>
-              {loadingForm ? 'Entrando...' : 'Acessar Painel'}
-            </button>
-          </form>
-        )}
+          <motion.button
+            type="submit"
+            className="submitBtn"
+            disabled={carregando}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.65 }}
+          >
+            {carregando ? (
+              <span className="loading">⏳ Entrando...</span>
+            ) : (
+              'Fazer Login'
+            )}
+          </motion.button>
+        </motion.form>
 
-      </div>
-    </div>
+        <motion.div
+          className="footer"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+        >
+          <p>
+            Não tem conta?{' '}
+            <motion.a
+              href="/cadastro-cliente"
+              whileHover={{ color: '#0ea5e9' }}
+            >
+              Cadastre-se aqui
+            </motion.a>
+          </p>
+        </motion.div>
+      </motion.div>
+
+      {/* Decorações */}
+      <motion.div
+        className="decoration1"
+        animate={{
+          y: [0, -20, 0],
+          opacity: [0.5, 0.8, 0.5],
+        }}
+        transition={{ duration: 6, repeat: Infinity }}
+      />
+      <motion.div
+        className="decoration2"
+        animate={{
+          x: [0, 20, 0],
+          opacity: [0.5, 0.8, 0.5],
+        }}
+        transition={{ duration: 8, repeat: Infinity }}
+      />
+    </motion.div>
   );
-}
-
-// Estilos básicos inline (depois você pode passar isso para o seu CSS padrão ou usar Tailwind)
-const styles = {
-  container: {
-    display: 'flex', justifyContent: 'center', alignItems: 'center', 
-    height: '100vh', backgroundColor: '#f4f4f9'
-  },
-  card: {
-    backgroundColor: '#fff', padding: '30px', borderRadius: '8px', 
-    boxShadow: '0 4px 6px rgba(0,0,0,0.1)', width: '100%', maxWidth: '400px'
-  },
-  tabContainer: {
-    display: 'flex', marginBottom: '20px', borderBottom: '2px solid #eee'
-  },
-  tab: {
-    flex: 1, padding: '10px', background: 'none', border: 'none', 
-    cursor: 'pointer', fontSize: '16px', color: '#666'
-  },
-  tabActive: {
-    flex: 1, padding: '10px', background: 'none', border: 'none', 
-    cursor: 'pointer', fontSize: '16px', color: '#007bff', 
-    borderBottom: '2px solid #007bff', fontWeight: 'bold'
-  },
-  form: {
-    display: 'flex', flexDirection: 'column', gap: '15px'
-  },
-  inputGroup: {
-    display: 'flex', flexDirection: 'column', gap: '5px'
-  },
-  input: {
-    padding: '10px', borderRadius: '4px', border: '1px solid #ccc', fontSize: '16px'
-  },
-  button: {
-    padding: '12px', backgroundColor: '#007bff', color: '#fff', 
-    border: 'none', borderRadius: '4px', fontSize: '16px', cursor: 'pointer'
-  },
-  errorBox: {
-    backgroundColor: '#ffe6e6', color: '#cc0000', padding: '10px', 
-    borderRadius: '4px', marginBottom: '15px', textAlign: 'center', fontSize: '14px'
-  }
 };
+
+export default Login;

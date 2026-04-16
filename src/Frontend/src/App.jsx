@@ -1,83 +1,105 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
-import { ProtectedRoute } from './components/ProtectedRoute';
-
-// Componentes Reais
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import NavBar from './components/NavBar';
+import ProtectedRoute from './components/ProtectedRoute';
+import Splash from './pages/Splash';
+import Home from './pages/Home';
 import Login from './pages/Login';
 import CadastroCliente from './pages/CadastroCliente';
 import VitrineVeiculos from './pages/VitrineVeiculos';
 import MeusPedidos from './pages/MeusPedidos';
-import DashboardAgente from './pages/DashboardAgente';
+import MeusContratos from './pages/MeusContratos';
 import AnalisePedidos from './pages/AnalisePedidos';
 import GestaoVeiculos from './pages/GestaoVeiculos';
-import Home from './pages/Home';
-import MeusContratos from './pages/MeusContratos';
+import DashboardAgente from './pages/DashboardAgente';
 import GerarContrato from './pages/GerarContrato';
+import './App.css';
 
-
-export default function App() {
+function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        {/* A NavBar fica FORA do <Routes> para aparecer em todas as telas */}
-        <NavBar />
-        
-        <Routes>
-          {/* Rotas Públicas */}
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/cadastro" element={<CadastroCliente />} />
-          <Route path="/" element={<Home />} />
+      <Routes>
+        {/* Splash como rota inicial */}
+        <Route path="/splash" element={<Splash />} />
 
-          {/* Rotas exclusivas de CLIENTE */}
-          <Route 
-            path="/vitrine" 
-            element={
-              <ProtectedRoute allowedRoles={['CLIENTE']}>
-                <VitrineVeiculos />
-              </ProtectedRoute>
-            } 
-          />
+        {/* Rotas com NavBar */}
+        <Route
+          path="/*"
+          element={
+            <>
+              <NavBar />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/cadastro-cliente" element={<CadastroCliente />} />
 
-          <Route 
-            path="/meus-pedidos" 
-            element={
-              <ProtectedRoute allowedRoles={['CLIENTE']}>
-                <MeusPedidos />
-              </ProtectedRoute>
-            } 
-          />
+                {/* Rotas Protegidas - Cliente */}
+                <Route
+                  path="/vitrine-veiculos"
+                  element={
+                    <ProtectedRoute tipoPermitido="cliente">
+                      <VitrineVeiculos />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/meus-pedidos"
+                  element={
+                    <ProtectedRoute tipoPermitido="cliente">
+                      <MeusPedidos />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/meus-contratos"
+                  element={
+                    <ProtectedRoute tipoPermitido="cliente">
+                      <MeusContratos />
+                    </ProtectedRoute>
+                  }
+                />
 
-          <Route path="/meus-contratos" element={<ProtectedRoute allowedRoles={['CLIENTE']}><MeusContratos /></ProtectedRoute>} />
+                {/* Rotas Protegidas - Agente */}
+                <Route
+                  path="/dashboard-agente"
+                  element={
+                    <ProtectedRoute tipoPermitido="agente">
+                      <DashboardAgente />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/analise-pedidos"
+                  element={
+                    <ProtectedRoute tipoPermitido="agente">
+                      <AnalisePedidos />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/gestao-veiculos"
+                  element={
+                    <ProtectedRoute tipoPermitido="agente">
+                      <GestaoVeiculos />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/gerar-contrato"
+                  element={
+                    <ProtectedRoute tipoPermitido="agente">
+                      <GerarContrato />
+                    </ProtectedRoute>
+                  }
+                />
 
-          {/* Rotas exclusivas de AGENTE */}
-          <Route 
-            path="/agente/dashboard" 
-            element={
-              <ProtectedRoute allowedRoles={['AGENTE']}>
-                <DashboardAgente />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-  path="/agente/dashboard" 
-  element={<ProtectedRoute allowedRoles={['AGENTE']}><DashboardAgente /></ProtectedRoute>} 
-/>
-<Route 
-  path="/agente/pedidos" 
-  element={<ProtectedRoute allowedRoles={['AGENTE']}><AnalisePedidos /></ProtectedRoute>} 
-/>
-<Route 
-  path="/agente/veiculos" 
-  element={<ProtectedRoute allowedRoles={['AGENTE']}><GestaoVeiculos /></ProtectedRoute>} 
-/>
-
-<Route path="/agente/gerar-contrato/:pedidoId" element={<ProtectedRoute allowedRoles={['AGENTE']}><GerarContrato /></ProtectedRoute>} />
-          
-          <Route path="*" element={<h1 style={{textAlign: 'center'}}>404 - Página não encontrada</h1>} />
-        </Routes>
-      </AuthProvider>
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
+            </>
+          }
+        />
+      </Routes>
     </BrowserRouter>
   );
 }
+
+export default App;
