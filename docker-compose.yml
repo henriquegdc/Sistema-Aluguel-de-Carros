@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:16
+    container_name: aluguelcarros-db
+    environment:
+      POSTGRES_DB: aluguel_carros
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d aluguel_carros"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aluguelcarros-backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      JDBC_URL: jdbc:postgresql://db:5432/aluguel_carros
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      JWT_SECRET: minha-chave
+      JWT_EXPIRATION_MS: 86400000
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:
+

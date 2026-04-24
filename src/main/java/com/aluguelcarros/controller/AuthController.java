@@ -1,5 +1,6 @@
 package com.aluguelcarros.controller;
 
+import com.aluguelcarros.config.JwtConfig;
 import com.aluguelcarros.dto.ClienteDTO;
 import com.aluguelcarros.model.Agente;
 import com.aluguelcarros.model.Cliente;
@@ -19,11 +20,14 @@ public class AuthController {
 
     private final ClienteService clienteService;
     private final AgenteRepository agenteRepository;
+    private final JwtConfig jwtConfig;
 
     public AuthController(ClienteService clienteService,
-                          AgenteRepository agenteRepository) {
+                          AgenteRepository agenteRepository,
+                          JwtConfig jwtConfig) {
         this.clienteService = clienteService;
         this.agenteRepository = agenteRepository;
+        this.jwtConfig = jwtConfig;
     }
 
     @Post("/login/agente")
@@ -32,7 +36,10 @@ public class AuthController {
         Agente agente = agenteRepository.findByCodigo(codigo)
                 .orElseThrow(() -> new IllegalArgumentException("Codigo de agente invalido"));
 
+        String token = jwtConfig.gerarToken(agente.getId(), "AGENTE", agente.getCodigo());
+
         return HttpResponse.ok(Map.of(
+                "token", token,
                 "id", agente.getId(),
                 "nome", agente.getNome(),
                 "codigo", agente.getCodigo(),
@@ -44,7 +51,10 @@ public class AuthController {
     public HttpResponse<Map<String, Object>> loginCliente(@Body Map<String, String> body) {
         Cliente cliente = clienteService.autenticarCliente(body.get("cpf"), body.get("senha"));
 
+        String token = jwtConfig.gerarToken(cliente.getId(), "CLIENTE", cliente.getCpf());
+
         return HttpResponse.ok(Map.of(
+                "token", token,
                 "id", cliente.getId(),
                 "nome", cliente.getNome(),
                 "cpf", cliente.getCpf(),

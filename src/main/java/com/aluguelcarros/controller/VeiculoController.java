@@ -39,20 +39,21 @@ public class VeiculoController {
     }
 
     @Post
-    public HttpResponse<Map<String, Object>> salvar(@Body Veiculo veiculo) {
-        Veiculo salvo = veiculoService.salvar(veiculo);
+    public HttpResponse<Map<String, Object>> salvar(@Body Map<String, Object> body) {
+        Veiculo salvo = veiculoService.salvar(fromPayload(body));
         return HttpResponse.created(toPayload(salvo));
     }
 
     @Put("/{id}")
-    public HttpResponse<Map<String, Object>> atualizar(@PathVariable Long id, @Body Veiculo body) {
+    public HttpResponse<Map<String, Object>> atualizar(@PathVariable Long id, @Body Map<String, Object> body) {
+        Veiculo payload = fromPayload(body);
         Veiculo existente = veiculoService.obterPorId(id);
-        existente.setMatricula(body.getMatricula());
-        existente.setMarca(body.getMarca());
-        existente.setModelo(body.getModelo());
-        existente.setPlaca(body.getPlaca());
-        existente.setAno(body.getAno());
-        existente.setDisponivel(body.getDisponivel());
+        existente.setMatricula(payload.getMatricula());
+        existente.setMarca(payload.getMarca());
+        existente.setModelo(payload.getModelo());
+        existente.setPlaca(payload.getPlaca());
+        existente.setAno(payload.getAno());
+        existente.setDisponivel(payload.getDisponivel());
 
         Veiculo atualizado = veiculoService.salvar(existente);
         return HttpResponse.ok(toPayload(atualizado));
@@ -74,5 +75,25 @@ public class VeiculoController {
                 "ano", veiculo.getAno(),
                 "disponivel", veiculo.getDisponivel()
         );
+    }
+
+    private Veiculo fromPayload(Map<String, Object> body) {
+        Veiculo veiculo = new Veiculo();
+        veiculo.setMatricula((String) body.get("matricula"));
+        veiculo.setMarca((String) body.get("marca"));
+        veiculo.setModelo((String) body.get("modelo"));
+        veiculo.setPlaca((String) body.get("placa"));
+
+        Object ano = body.get("ano");
+        if (ano != null) {
+            veiculo.setAno(Integer.valueOf(ano.toString()));
+        }
+
+        Object disponivel = body.get("disponivel");
+        if (disponivel != null) {
+            veiculo.setDisponivel(Boolean.valueOf(disponivel.toString()));
+        }
+
+        return veiculo;
     }
 }

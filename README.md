@@ -21,7 +21,7 @@
 
 ![Versao](https://img.shields.io/badge/Versao-v1.0.0-blue?style=for-the-badge)
 ![Java](https://img.shields.io/badge/Java-21-007ec6?style=for-the-badge&logo=openjdk&logoColor=white)
-![Micronaut](https://img.shields.io/badge/Micronaut-4.8.9-1f6feb?style=for-the-badge)
+![Micronaut](https://img.shields.io/badge/Micronaut-4.10.11-1f6feb?style=for-the-badge)
 ![API](https://img.shields.io/badge/Arquitetura-API_REST-orange?style=for-the-badge)
 
 ---
@@ -71,7 +71,7 @@ O sistema visa apoiar a gestao completa de alugueis de automoveis.
 ### Back-end
 
 - Java 21
-- Micronaut Framework 4.8.9
+- Micronaut Framework 4.10.11
 - Micronaut Data JPA
 - Hibernate ORM
 - HikariCP
@@ -139,9 +139,10 @@ cd "Sistema-Aluguel-de-Carros"
 
 #### Build e execucao
 
+Opcao 1 (recomendada): subir banco e API com Docker Compose
+
 ```bash
-./mvnw clean compile
-./mvnw mn:run
+docker compose up --build -d
 ```
 
 Teste rapido de saude:
@@ -156,6 +157,26 @@ Resposta esperada:
 {"service":"aluguelcarros-api","status":"UP"}
 ```
 
+Opcao 2: rodar API localmente com banco no Docker
+
+```bash
+docker compose up -d db
+./mvnw clean compile
+./mvnw mn:run
+```
+
+Opcao 3: IntelliJ (botao Run)
+
+- Classe principal: `com.aluguelcarros.Application`
+- JDK: 21
+- Se `backend` do Docker estiver ativo, pare-o antes para evitar conflito de porta (`8080`):
+
+```bash
+docker compose stop backend
+```
+
+- Deixe o banco rodando (`docker compose up -d db`) e execute pelo IntelliJ.
+
 ### 🚗 Front-end
 
 > **Importante:** Certifique-se de que o back-end esteja rodando na porta `8080` antes de iniciar o front-end.
@@ -163,7 +184,7 @@ Resposta esperada:
 1. Navegue ate a pasta do frontend:
 
 ```bash
-cd src/frontend
+cd src/Frontend
 ```
 
 2. Instale as dependencias:
@@ -188,22 +209,26 @@ As configuracoes de runtime estao no arquivo `src/main/resources/application.yml
 
 Variaveis de ambiente utilizadas:
 
-- `JDBC_URL` (padrao: `jdbc:postgresql://localhost:5432/aluguelcarros`)
+- `JDBC_URL` (padrao: `jdbc:postgresql://localhost:5432/aluguel_carros`)
 - `DB_USER` (padrao: `postgres`)
 - `DB_PASSWORD` (padrao: `postgres`)
+- `JWT_SECRET` (padrao: `minha-chave-secreta-muito-longa-para-ser-segura-em-dev`)
+- `JWT_EXPIRATION_MS` (padrao: `86400000`)
 
 Exemplo:
 
 ```bash
-export JDBC_URL='jdbc:postgresql://localhost:5432/aluguelcarros'
+export JDBC_URL='jdbc:postgresql://localhost:5432/aluguel_carros'
 export DB_USER='postgres'
 export DB_PASSWORD='postgres'
+export JWT_SECRET='minha-chave'
+export JWT_EXPIRATION_MS='86400000'
 ```
 
 Criacao do banco:
 
 ```bash
-psql -U postgres -h localhost -c "CREATE DATABASE aluguelcarros;"
+psql -U postgres -h localhost -c "CREATE DATABASE aluguel_carros;"
 ```
 
 Observacoes:
@@ -211,11 +236,42 @@ Observacoes:
 - O Flyway aplica automaticamente `src/main/resources/db/migration/V1__init_schema.sql` ao iniciar.
 - O seed inicial inclui agentes com codigos `BNC-001` e `EMP-001`.
 
+### Docker (PostgreSQL + Back-end)
+
+Subir banco e API com Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+Parar os containers:
+
+```bash
+docker compose down
+```
+
+Parar e remover volume do banco:
+
+```bash
+docker compose down -v
+```
+
+Validar containers:
+
+```bash
+docker compose ps
+```
+
 ---
 
 ## Principais Endpoints
 
 Base URL local: `http://localhost:8080`
+
+Regras de autenticacao JWT:
+
+- Rotas publicas: `POST /api/auth/login/cliente`, `POST /api/auth/login/agente`, `POST /api/auth/cadastro/cliente`, `GET /api/veiculos`, `GET /api/veiculos/disponiveis`, `GET /`
+- Demais rotas exigem header `Authorization: Bearer <token>`
 
 ### Autenticacao
 
