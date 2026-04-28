@@ -399,7 +399,7 @@ Este projeto foi desenvolvido no contexto das atividades praticas do curso de En
 
 | Nome | GitHub |
 |------|--------|
-| Joao Pedro Moura | [@joaopedromoura](https://github.com/joaopedromoura) |
+| Joao Pedro Moura | [@joaopedromoura](https://github.com/joaopedromourinhasantos) |
 | Miguel |  adicionar perfil oficial |
 | Henrique Carvalho | [@henrquegdc](https://github.com/henriquegdc) |
 
