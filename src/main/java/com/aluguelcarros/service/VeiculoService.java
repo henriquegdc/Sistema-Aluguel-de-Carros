@@ -35,7 +35,10 @@ public class VeiculoService {
 
     @Transactional
     public Veiculo salvar(Veiculo veiculo) {
-        return veiculoRepository.save(veiculo);
+        if (veiculo.getId() == null) {
+            return veiculoRepository.save(veiculo);
+        }
+        return veiculoRepository.update(veiculo);
     }
 
     @Transactional

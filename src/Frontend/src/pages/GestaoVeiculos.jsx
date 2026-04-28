@@ -6,7 +6,7 @@ export default function GestaoVeiculos() {
   const [editing, setEditing] = useState(null);
   const [erro, setErro] = useState(''); // Estado para capturar o erro exato do backend
   const [form, setForm] = useState({ 
-    matricula: '', marca: '', modelo: '', placa: '', ano: '', disponivel: true 
+    matricula: '', marca: '', modelo: '', placa: '', ano: '', disponivel: true, preco: '', img: '' 
   });
 
   useEffect(() => { carregarVeiculos(); }, []);
@@ -26,9 +26,12 @@ export default function GestaoVeiculos() {
 
     try {
       // 1. O Java exige que o ano seja um Número Inteiro, e não um texto.
+      const precoNumero = form.preco === '' ? null : Number(form.preco);
       const payload = {
         ...form,
-        ano: parseInt(form.ano, 10) // Conversão forçada para evitar Bad Request (400)
+        ano: parseInt(form.ano, 10), // Conversão forçada para evitar Bad Request (400)
+        preco: Number.isNaN(precoNumero) ? null : precoNumero,
+        img: form.img?.trim() || null
       };
 
       if (editing) {
@@ -41,7 +44,7 @@ export default function GestaoVeiculos() {
       
       // Limpa o formulário após o sucesso
       setEditing(null);
-      setForm({ matricula: '', marca: '', modelo: '', placa: '', ano: '', disponivel: true });
+      setForm({ matricula: '', marca: '', modelo: '', placa: '', ano: '', disponivel: true, preco: '', img: '' });
       carregarVeiculos();
 
     } catch (err) {
@@ -53,7 +56,16 @@ export default function GestaoVeiculos() {
 
   const handleEdit = (v) => {
     setEditing(v.id);
-    setForm({ ...v });
+    setForm({
+      matricula: v.matricula ?? '',
+      marca: v.marca ?? '',
+      modelo: v.modelo ?? '',
+      placa: v.placa ?? '',
+      ano: v.ano ?? '',
+      disponivel: v.disponivel ?? true,
+      preco: v.preco ?? '',
+      img: v.img ?? ''
+    });
     window.scrollTo(0, 0); // Sobe a tela para o formulário
   };
 
@@ -113,6 +125,16 @@ export default function GestaoVeiculos() {
               <label>Ano de Fabricação</label>
               <input className="input" type="number" min="1990" max="2025" placeholder="Ex: 2022" value={form.ano} onChange={e => setForm({...form, ano: e.target.value})} required />
             </div>
+
+            <div className="form-group">
+              <label>Preço da Diária (R$)</label>
+              <input className="input" type="number" min="0" step="0.01" placeholder="Ex: 250.00" value={form.preco} onChange={e => setForm({...form, preco: e.target.value})} />
+            </div>
+
+            <div className="form-group">
+              <label>URL da Imagem</label>
+              <input className="input" type="url" placeholder="https://..." value={form.img} onChange={e => setForm({...form, img: e.target.value})} />
+            </div>
           </div>
 
           <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
@@ -122,7 +144,7 @@ export default function GestaoVeiculos() {
             {editing && (
               <button type="button" className="btn btn-outline" onClick={() => {
                 setEditing(null);
-                setForm({ matricula: '', marca: '', modelo: '', placa: '', ano: '', disponivel: true });
+                setForm({ matricula: '', marca: '', modelo: '', placa: '', ano: '', disponivel: true, preco: '', img: '' });
                 setErro('');
               }}>
                 Cancelar Edição

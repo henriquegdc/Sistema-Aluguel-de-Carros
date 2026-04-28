@@ -11,6 +11,7 @@ import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Put;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +56,14 @@ public class VeiculoController {
         existente.setAno(payload.getAno());
         existente.setDisponivel(payload.getDisponivel());
 
+        if (body.containsKey("preco")) {
+            existente.setPreco(payload.getPreco());
+        }
+
+        if (body.containsKey("img")) {
+            existente.setImg(payload.getImg());
+        }
+
         Veiculo atualizado = veiculoService.salvar(existente);
         return HttpResponse.ok(toPayload(atualizado));
     }
@@ -73,7 +82,9 @@ public class VeiculoController {
                 "modelo", veiculo.getModelo(),
                 "placa", veiculo.getPlaca(),
                 "ano", veiculo.getAno(),
-                "disponivel", veiculo.getDisponivel()
+                "disponivel", veiculo.getDisponivel(),
+                "preco", veiculo.getPreco(),
+                "img", veiculo.getImg()
         );
     }
 
@@ -92,6 +103,16 @@ public class VeiculoController {
         Object disponivel = body.get("disponivel");
         if (disponivel != null) {
             veiculo.setDisponivel(Boolean.valueOf(disponivel.toString()));
+        }
+
+        Object preco = body.get("preco");
+        if (preco != null && !preco.toString().isBlank()) {
+            veiculo.setPreco(new BigDecimal(preco.toString()));
+        }
+
+        Object img = body.get("img");
+        if (img != null && !img.toString().isBlank()) {
+            veiculo.setImg(img.toString());
         }
 
         return veiculo;

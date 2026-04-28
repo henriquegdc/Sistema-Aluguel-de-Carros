@@ -4,7 +4,9 @@ import { formatarPlaca } from '../utils/formatters';
 
 export default function VeiculoCard({ veiculo, textoBotao, onAcao, processando }) {
   // Caso não venha imagem da API, usamos um placeholder
-  const imagemBg = veiculo.img || 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80';
+  const imagemBg = veiculo.img?.trim() || 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80';
+  const precoNumero = Number(veiculo.preco);
+  const precoExibido = Number.isFinite(precoNumero) ? precoNumero.toFixed(2) : '250.00';
 
   return (
     <div className="vehicle-card">
@@ -27,7 +29,7 @@ export default function VeiculoCard({ veiculo, textoBotao, onAcao, processando }
         <div className="vehicle-card__footer">
           <div className="vehicle-card__price">
             <span className="vehicle-card__price-label">Diária a partir de</span>
-            <span className="vehicle-card__price-value">R$ {veiculo.preco || '250'}</span>
+            <span className="vehicle-card__price-value">R$ {precoExibido}</span>
           </div>
           
           <button 

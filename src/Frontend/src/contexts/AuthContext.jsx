@@ -20,8 +20,9 @@ export function AuthProvider({ children }) {
   async function loginCliente(cpf, senha) {
     try {
       const response = await api.post('/auth/login/cliente', { cpf, senha });
-      const loggedUser = response.data; // { id, nome, cpf, perfil: "CLIENTE" }
+      const loggedUser = response.data; // { id, nome, cpf, perfil: "CLIENTE", token }
       
+      localStorage.setItem('@AluguelCarros:token', loggedUser.token);
       localStorage.setItem('@AluguelCarros:user', JSON.stringify(loggedUser));
       setUser(loggedUser);
       return { success: true };
@@ -34,8 +35,9 @@ export function AuthProvider({ children }) {
   async function loginAgente(codigo) {
     try {
       const response = await api.post('/auth/login/agente', { codigo });
-      const loggedUser = response.data; // { id, nome, codigo, perfil: "AGENTE" }
+      const loggedUser = response.data; // { id, nome, codigo, perfil: "AGENTE", token }
       
+      localStorage.setItem('@AluguelCarros:token', loggedUser.token);
       localStorage.setItem('@AluguelCarros:user', JSON.stringify(loggedUser));
       setUser(loggedUser);
       return { success: true };
@@ -47,6 +49,7 @@ export function AuthProvider({ children }) {
   function logout() {
     setUser(null);
     localStorage.removeItem('@AluguelCarros:user');
+    localStorage.removeItem('@AluguelCarros:token');
   }
 
   return (
