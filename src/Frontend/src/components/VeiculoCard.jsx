@@ -1,52 +1,44 @@
 // src/components/VeiculoCard.jsx
 import React from 'react';
-import Botao from './Botao';
 import { formatarPlaca } from '../utils/formatters';
 
 export default function VeiculoCard({ veiculo, textoBotao, onAcao, processando }) {
-  return (
-    <div style={styles.card}>
-      <div style={styles.imagePlaceholder}>
-        🚗 {veiculo.marca}
-      </div>
-      <div style={styles.cardBody}>
-        <h3 style={{ margin: '0 0 10px 0', color: '#333' }}>{veiculo.modelo}</h3>
-        
-        <div style={styles.infoRow}>
-          <span style={styles.label}>Ano:</span>
-          <span style={styles.value}>{veiculo.ano}</span>
-        </div>
-        
-        <div style={styles.infoRow}>
-          <span style={styles.label}>Placa:</span>
-          <span style={styles.value}>{formatarPlaca(veiculo.placa)}</span>
-        </div>
-        
-        <div style={styles.infoRow}>
-          <span style={styles.label}>Matrícula:</span>
-          <span style={styles.value}>{veiculo.matricula}</span>
-        </div>
+  // Caso não venha imagem da API, usamos um placeholder
+  const imagemBg = veiculo.img || 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80';
 
-        <div style={{ marginTop: 'auto', paddingTop: '15px' }}>
-          <Botao 
+  return (
+    <div className="vehicle-card">
+      <div 
+        className="vehicle-card__image" 
+        style={{ backgroundImage: `url(${imagemBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
+      </div>
+      
+      <div className="vehicle-card__body">
+        <span className="vehicle-card__category">{veiculo.marca}</span>
+        <h3 className="vehicle-card__name">{veiculo.modelo}</h3>
+        
+        <div className="vehicle-card__specs">
+          <span className="vehicle-card__spec">📅 {veiculo.ano}</span>
+          <span className="vehicle-card__spec">🏷️ {formatarPlaca(veiculo.placa)}</span>
+          {veiculo.matricula && <span className="vehicle-card__spec">🔢 {veiculo.matricula}</span>}
+        </div>
+        
+        <div className="vehicle-card__footer">
+          <div className="vehicle-card__price">
+            <span className="vehicle-card__price-label">Diária a partir de</span>
+            <span className="vehicle-card__price-value">R$ {veiculo.preco || '250'}</span>
+          </div>
+          
+          <button 
+            className="btn btn-primary btn-sm"
             onClick={() => onAcao(veiculo.id)} 
             disabled={processando}
-            variant="primary"
-            style={{ width: '100%' }}
           >
             {processando ? 'Aguarde...' : textoBotao}
-          </Botao>
+          </button>
         </div>
       </div>
     </div>
   );
 }
-
-const styles = {
-  card: { backgroundColor: '#fff', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', overflow: 'hidden', display: 'flex', flexDirection: 'column' },
-  imagePlaceholder: { backgroundColor: '#e9ecef', height: '160px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', color: '#6c757d', fontWeight: 'bold' },
-  cardBody: { padding: '20px', display: 'flex', flexDirection: 'column', flex: 1 },
-  infoRow: { display: 'flex', justifyContent: 'space-between', marginBottom: '8px', borderBottom: '1px dashed #eee', paddingBottom: '4px' },
-  label: { color: '#666', fontWeight: '500' },
-  value: { color: '#333', fontWeight: 'bold' }
-};

@@ -1,5 +1,9 @@
 package com.aluguelcarros.model;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,111 +13,138 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Serdeable
 @Entity
 @Table(name = "veiculos")
 public class Veiculo {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(nullable = false, unique = true, length = 30)
-	private String matricula;
+    @Column(nullable = false, unique = true, length = 30)
+    private String matricula;
 
-	@Column(nullable = false)
-	private Integer ano;
+    @Column(nullable = false)
+    private Integer ano;
 
-	@Column(nullable = false, length = 80)
-	private String marca;
+    @Column(nullable = false, length = 80)
+    private String marca;
 
-	@Column(nullable = false, length = 120)
-	private String modelo;
+    @Column(nullable = false, length = 120)
+    private String modelo;
 
-	@Column(nullable = false, unique = true, length = 12)
-	private String placa;
+    @Column(nullable = false, unique = true, length = 12)
+    private String placa;
 
-	@Column(nullable = false)
-	private Boolean disponivel = true;
+    @Column(nullable = false)
+    private Boolean disponivel = true;
 
-	@OneToMany(mappedBy = "veiculo")
-	private List<Pedido> pedidos = new ArrayList<>();
+    // --- NOVOS CAMPOS ADICIONADOS ---
 
-	@OneToMany(mappedBy = "veiculo")
-	private List<Contrato> contratos = new ArrayList<>();
+    // Precision 10 e scale 2 significa valores até 99.999.999,99
+    @Column(precision = 10, scale = 2) 
+    private BigDecimal preco;
 
-	public Long getId() {
-		return id;
-	}
+    // Length 1000 porque URLs de imagens da internet podem ser bem grandes
+    @Column(length = 1000) 
+    private String img;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    // --------------------------------
 
-	public String getMatricula() {
-		return matricula;
-	}
+    @OneToMany(mappedBy = "veiculo")
+    private List<Pedido> pedidos = new ArrayList<>();
 
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
-	}
+    @OneToMany(mappedBy = "veiculo")
+    private List<Contrato> contratos = new ArrayList<>();
 
-	public Integer getAno() {
-		return ano;
-	}
+    // --- GETTERS E SETTERS ---
 
-	public void setAno(Integer ano) {
-		this.ano = ano;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getMarca() {
-		return marca;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
+    public String getMatricula() {
+        return matricula;
+    }
 
-	public String getModelo() {
-		return modelo;
-	}
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
 
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
-	}
+    public Integer getAno() {
+        return ano;
+    }
 
-	public String getPlaca() {
-		return placa;
-	}
+    public void setAno(Integer ano) {
+        this.ano = ano;
+    }
 
-	public void setPlaca(String placa) {
-		this.placa = placa;
-	}
+    public String getMarca() {
+        return marca;
+    }
 
-	public Boolean getDisponivel() {
-		return disponivel;
-	}
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
 
-	public void setDisponivel(Boolean disponivel) {
-		this.disponivel = disponivel;
-	}
+    public String getModelo() {
+        return modelo;
+    }
 
-	public List<Pedido> getPedidos() {
-		return pedidos;
-	}
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
 
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
+    public String getPlaca() {
+        return placa;
+    }
 
-	public List<Contrato> getContratos() {
-		return contratos;
-	}
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
 
-	public void setContratos(List<Contrato> contratos) {
-		this.contratos = contratos;
-	}
+    public Boolean getDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(Boolean disponivel) {
+        this.disponivel = disponivel;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public List<Contrato> getContratos() {
+        return contratos;
+    }
+
+    public void setContratos(List<Contrato> contratos) {
+        this.contratos = contratos;
+    }
 }

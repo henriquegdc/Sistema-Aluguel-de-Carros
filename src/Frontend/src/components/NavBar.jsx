@@ -14,7 +14,7 @@ export default function NavBar() {
     <nav className="navbar">
       <div className="navbar-brand">
         <Link to="/" className="logo">
-          🚗 <span style={{ marginLeft: '10px' }}>AluguelCarros</span>
+          🚗 <span style={{ marginLeft: '10px' }}>AlugaCar</span>
         </Link>
       </div>
 
